@@ -1,0 +1,30 @@
+# This example shows more configurable fields comparing to the minimal "config.yml"
+# You can use "nnictl create --config config_detailed.yml" to launch this experiment.
+# If you see an error message saying "port 8080 is used", use "nnictl stop --all" to stop previous experiments.
+
+experimentName: KagglePetFinder#2           # An optional name to help you distinguish experiments.
+
+useAnnotation: false
+searchSpaceFile: search_space.json
+
+trialCommand: python3 Train_NNI_HpSearch.py  # The command to launch a trial. NOTE: change "python3" to "python" if you are using Windows.
+trialCodeDirectory: .         # The path of trial code. By default it's ".", which means the same directory of this config file.
+trialGpuNumber: 1               # How many GPUs should each trial use. CUDA is required when it's greater than zero.
+trialConcurrency: 3           # Run 1 trials concurrently.  有多少个GPU就能同时运行多少个程序
+
+experimentWorkingDirectory: /storage/Kaggle_Pet_Finder/nni-experiments
+maxExperimentDuration: 70h       # Stop generating trials after 1 hour.
+
+tuner:                          # Configure the tuning alogrithm.
+  name: TPE                     # Supported algorithms: TPE, Random, Anneal, Evolution, GridSearch, GPTuner, PBTTuner, etc.
+                                #   Full list:  https://nni.readthedocs.io/en/latest/Tuner/BuiltinTuner.html
+  classArgs:                    # Algorithm specific arguments. See the tuner's doc for details.
+    optimize_mode: minimize     #   "minimize" or "maximize"
+
+# Configure the training platform.
+# Supported platforms: local, remote, openpai, aml, kubeflow, kubernetes, adl.
+trainingService:
+  platform: local
+  useActiveGpu: true           # NOTE: Use "true" if you are using an OS with graphical interface (e.g. Windows 10, Ubuntu desktop)
+                                #   Reason and details:  https://nni.readthedocs.io/en/latest/reference/experiment_config.html#useactivegpu
+  gpuIndices: [0,1,2]                 # 指定GPU型号

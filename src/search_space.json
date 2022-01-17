@@ -1,0 +1,23 @@
+{
+    "lr": {
+        "_type": "choice",
+        "_value": [0.001,0.0005,0.0001,0.00005,0.00001,0.000005,0.000001]
+    },
+    "optimizer": {
+        "_type": "choice",
+        "_value": ["RAdam", "Adam", "AdamW", "SGDM"]
+    },
+    "batch_size": {
+        "_type": "choice",
+        "_value": [16,32,48]
+    },
+    "loss_type": {
+        "_type": "choice",
+        "_value": ["bce_loss"]
+    },
+    "weight_decay": {
+        "_type": "choice",
+        "_value": [0.01,0.001,0.0001,0.00001]
+    }
+
+}
